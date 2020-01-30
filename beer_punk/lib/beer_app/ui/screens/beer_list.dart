@@ -1,60 +1,94 @@
+import 'package:beer_punk/model/Beer.dart';
 import 'package:flutter/material.dart';
+import 'package:beer_punk/api/Repository.dart';
 
-class BeerList extends StatelessWidget{
+class BeerList extends StatefulWidget{
+  @override
+  _BeerListState createState() => _BeerListState();
+}
+
+class _BeerListState extends State<BeerList>{
+  List beers;
+  var color = Color.fromRGBO(58, 66, 86, 1.0);
+@override
+void initState() {
+    super.initState();
+    getProducts();
+  }
+
   @override
   Widget build(BuildContext context) {
-    Text _buildText(){
-      return Text(
-        'Beer List',
-      );
-    }
-    List<String> _buildListView() =>['A','B','C','D','E','F','G','H','I','J'];
-    void printConsole(int index ){
-      print(index.toString());
-    }
-
-    Container _buildContainer(int index){
+    Container buildTextStyle(int index){
+      var beer = beers[index] as Beer;
       return Container(
-        decoration: BoxDecoration(
-          color: Colors.yellow,
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Colors.blue, Colors.purple]),
-          border: Border.all(
-          color: Colors.lightBlue,
-          width: 1,
-    ),
-    borderRadius: BorderRadius.circular(10),
-        ),
         child: Column(
           children: <Widget>[
-              SizedBox(height: 50.0),
-              Text( _buildListView()[index]),
-              SizedBox(height: 50.0)
+            Text( beer.name, style: TextStyle(color: Colors.white, fontStyle: FontStyle.normal, fontSize: 17)),
+            Text( beer.firstBrewed, style: TextStyle(color: Colors.white, fontStyle: FontStyle.normal, fontSize: 14)),
+          ],
+        ),
+      );
+    }
+    Image buildImage(String url) => Image.network(url ,scale: 10);
+
+    Container buildListRow(int index){
+      var beer = beers[index] as Beer;
+      return Container(
+        child: Row(
+          children: <Widget>[
+            buildImage(beer.imageUrl),
+            SizedBox(width: 10.0),
+            buildTextStyle(index)
           ],
         ),
       );
     }
 
+
+    Card _buildCard(int index){
+      return Card(
+      elevation: 8.0,
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      child: Container(
+        padding: EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(3),
+          color: color,
+        ),
+        child: buildListRow(index)
+      ),
+    );
+    }
+
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: color,
       body: ListView.builder(
-        itemCount: _buildListView().length,
+        itemCount: beers == null ? 0 : beers.length,
         itemBuilder:(BuildContext context, int index){
           return GestureDetector(
-            child: _buildContainer(index),
+            child: _buildCard(index),
             onTap: (){
               Navigator.pushNamed(context, '/detail');
-              printConsole(index);
             },
           );
         },
       ),
       appBar: AppBar(
-        title: _buildText(),
-        backgroundColor: Colors.blue,
+        elevation: 1,
+        title: Text(
+        'Beer List',
+      ),
+        backgroundColor: color,
       ),
     );
   }
+
+Future getProducts() async{
+ var repository = Repository();
+ var _beer  =  await repository.getBeerList(Beer()) as List;
+ setState(() {
+   beers = _beer;
+ });
+}
+
 }

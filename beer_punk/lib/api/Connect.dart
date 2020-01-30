@@ -15,9 +15,9 @@ class ConnectManager implements Connect{
   @override
   Future getData(URLSERVICE type) async {
     var url = _baseUrl + EndPointService.getUrl(type);
+    print(url);
     var response = await http.get(url);
     var json = jsonDecode(response.body);
-    print(json);
       return json;
   }
 
@@ -35,7 +35,7 @@ class EndPointService {
 static String getUrl(URLSERVICE type){
   switch(type){
     case URLSERVICE.LIST:
-      return '?page={p}';
+      return '?page=1';
       break;
     case URLSERVICE.DETAIL:
       return '/{id}';
