@@ -45,9 +45,9 @@ static String getUrl(URLSERVICE type){
 }
 }
 
-
 enum URLSERVICE
 {
   LIST,
   DETAIL
   }
+

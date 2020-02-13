@@ -82,5 +82,6 @@ class Beer<T extends JsonDecoderObject> implements JsonDecoderObject {
 
   @override
   Map<String, dynamic> objectToJson() => toJson();
+
 }
 

@@ -1,6 +1,6 @@
-import 'package:beer_punk/model/Beer.dart';
-import 'package:flutter/material.dart';
 import 'package:beer_punk/api/Repository.dart';
+import 'package:beer_punk/model/beer.dart';
+import 'package:flutter/material.dart';
 import 'package:beer_punk/beer_app/ui/components/gradient_appbar.dart';
 import 'package:beer_punk/beer_app/ui/components/listPageBody.dart';
 
@@ -26,8 +26,7 @@ void initState() {
         child: new Column(
           children: <Widget>[
             new GradientAppBar('Beer'),
-            new ListPageBody(),
-            new ListPageBody()
+            new ListPageBody(beers),
           ],
         ),
       )
