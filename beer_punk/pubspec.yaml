@@ -44,6 +44,7 @@ flutter:
 
   assets:
     - assets/images/batman.png
+    - assets/images/background.jpg
 
   fonts:
     - family : Poppins

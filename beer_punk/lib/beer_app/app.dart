@@ -9,11 +9,7 @@ class BeerApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       debugShowMaterialGrid: false,
       title: 'Beer',
-      initialRoute: '/',
-      routes: {
-        '/'     : (context) => BeerList(),
-        '/detail' : (context) => BeerDetail()
-      },
+      home: new BeerList(),
     );
   }
 
