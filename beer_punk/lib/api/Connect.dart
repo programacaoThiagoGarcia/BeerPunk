@@ -16,7 +16,8 @@ class ConnectManager implements Connect{
   Future getData(URLSERVICE type) async {
     var url = _baseUrl + EndPointService.getUrl(type);
     print(url);
-    var response = await http.get(url);
+    var uri = Uri.parse(url);
+    var response = await http.get(uri);
     var json = jsonDecode(response.body);
       return json;
   }
@@ -24,7 +25,8 @@ class ConnectManager implements Connect{
   @override
   Future postData<T extends JsonDecoderObject>(T t,URLSERVICE type) async{
     var url = _baseUrl + EndPointService.getUrl(type);
-    var response = await http.post(url, body: t.objectToJson());
+    var uri = Uri.parse(url);
+    var response = await http.post(uri, body: t.objectToJson());
     var json = jsonDecode(response.body);
     return json;
   }
